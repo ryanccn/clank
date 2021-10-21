@@ -10,6 +10,19 @@ Built with Deno.
 $ deno install -fAq --name="clank" https://deno.land/x/clank/mod.ts
 ```
 
+## 🔥 Usage
+
+```bash
+# Basic help text:
+$ clank
+
+# Run a C++ script:
+$ clank hello.cpp
+
+# See juicy debug info:
+$ CLANK_DEBUG=1 clank hello.cpp
+```
+
 ## 🚀 Features
 
 - **Passthrough** `stdin`, `stdout` and `stderr`
