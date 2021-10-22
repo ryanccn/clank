@@ -4,7 +4,7 @@ import { getCacheDir } from './cache.ts';
 
 const LIMIT = 0.5 * 1000 * 1000 * 1000; // 0.5 GB
 
-const getInfo = async (dir: string) => {
+export const getInfo = async (dir: string) => {
   let totalSize = 0;
 
   const asyncIterFiles = Deno.readDir(dir);

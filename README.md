@@ -52,4 +52,4 @@ $ clank upgrade
 - [x] Smarter deletion algo
 - [x] Options to compiler
 - [x] Configure which compiler to use
-- [ ] More tests
+- [x] More tests
