@@ -15,7 +15,7 @@ export default async (options: Options, fileName: string) => {
   console.log = console.error;
 
   if (!(await exists(fileName))) {
-    error('File doesn\'t exist!');
+    error(`File \`${fileName}\` doesn\'t exist!`);
     Deno.exit(1);
   }
 
@@ -63,7 +63,8 @@ export default async (options: Options, fileName: string) => {
         white(
           ' ' + (statusText
             ? `${statusText} (${exitCode})`
-            : exitCode.toString()) + ' ',
+            : exitCode.toString()) +
+            ' ',
         ),
       )
     }`,
