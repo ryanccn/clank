@@ -54,7 +54,7 @@ if (options.compilerFlags) {
   }
 }
 
-const outputFile = await getCacheFile(fileName);
+const outputFile = await getCacheFile(fileName, options.compilerFlags);
 
 if (!await exists(outputFile)) {
   debug('compiling...');

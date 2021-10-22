@@ -37,9 +37,17 @@ export const getCacheDir = async () => {
   return CACHE_DIR;
 };
 
-export const getCacheFile = async (fileName: string) => {
+export const getCacheFile = async (
+  fileName: string,
+  compilerFlags?: string[],
+) => {
   const data = await Deno.readFile(fileName);
-  const hash = new Sha256().update(data).hex();
+  const hash1 = new Sha256().update(data).hex();
+  const hash2 = compilerFlags
+    ? new Sha256().update(new TextEncoder().encode(compilerFlags.join(',')))
+      .hex()
+    : 'noflags';
+  const hash = hash1 + '.' + hash2;
 
   debug(`computed hash ${hash} for file ${fileName}`);
 
