@@ -1,8 +1,10 @@
 import { Sha256 } from 'https://deno.land/std@0.112.0/hash/sha256.ts';
 import { join } from 'https://deno.land/std@0.112.0/path/mod.ts';
+
 import exists from './exists.ts';
 import { debug, error } from './log.ts';
-// import exists from './exists.ts';
+
+import type Options from './options.ts';
 
 export const getCacheDir = async () => {
   const HOME = Deno.env.get('HOME');
@@ -39,17 +41,26 @@ export const getCacheDir = async () => {
 
 export const getCacheFile = async (
   fileName: string,
-  compilerFlags?: string[],
+  options: Options,
 ) => {
   const data = await Deno.readFile(fileName);
-  const hash1 = new Sha256().update(data).hex();
-  const hash2 = compilerFlags
-    ? new Sha256().update(new TextEncoder().encode(compilerFlags.join(',')))
-      .hex()
-    : 'noflags';
-  const hash = hash1 + '.' + hash2;
 
-  debug(`computed hash ${hash} for file ${fileName}`);
+  const optionsString = options.compiler + ':' +
+    (options.compilerFlags ? options.compilerFlags?.join(',') : 'noflags');
+
+  const hashData = new Uint8Array([
+    ...data,
+    ...new TextEncoder().encode(':::partition:::'),
+    ...new TextEncoder().encode(optionsString),
+  ]);
+
+  const hash = new Sha256().update(hashData).hex();
+
+  debug(
+    `computed hash ${hash} for file ${fileName} w/ compiler ${options.compiler} & flags ${
+      options.compilerFlags ? options.compilerFlags.join(', ') : 'none'
+    }`,
+  );
 
   return join(await getCacheDir(), `${hash}.clank.build`);
 };

@@ -29,6 +29,7 @@ $ CLANK_DEBUG=1 clank hello.cpp
 - Prints **status code**
 - A **cache** based on unique hashes of files
 - **Smart deletion** of cached files to keep cache size under 0.5 GB
+- Configure **which compiler** to use
 - Passing options **directly to compilers**
 - Looks great
 
@@ -37,5 +38,5 @@ $ CLANK_DEBUG=1 clank hello.cpp
 - [ ] Config file
 - [x] Smarter deletion algo
 - [x] Options to compiler
-- [ ] Configure which compiler to use
+- [x] Configure which compiler to use
 - [ ] More tests
