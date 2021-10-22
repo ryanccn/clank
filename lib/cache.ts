@@ -1,5 +1,4 @@
-import { Sha256 } from 'https://deno.land/std@0.112.0/hash/sha256.ts';
-import { join } from 'https://deno.land/std@0.112.0/path/mod.ts';
+import { join, Sha256 } from '../_deps.ts';
 
 import exists from './exists.ts';
 import { debug, error } from './log.ts';

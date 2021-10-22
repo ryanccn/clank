@@ -1,8 +1,4 @@
-import { Command } from 'https://deno.land/x/cliffy@v0.19.6/command/mod.ts';
-import { Table } from 'https://deno.land/x/cliffy@v0.19.6/table/mod.ts';
-
-import { join } from 'https://deno.land/std@0.112.0/path/mod.ts';
-import { blue, bold } from 'https://deno.land/std@0.112.0/fmt/colors.ts';
+import { blue, bold, Command, join, Table } from '../_deps.ts';
 
 import { success, warning } from '../lib/log.ts';
 

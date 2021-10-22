@@ -1,5 +1,5 @@
 import { error, log, success } from './../lib/log.ts';
-import * as Colors from './../lib/colors.ts';
+import { bgGreen, bgRed, white } from '../_deps.ts';
 
 import compile from './compile.ts';
 
@@ -41,8 +41,8 @@ export default async (options: Options, fileName: string) => {
 
   log(
     `exiting with status code ${
-      (cppProc.success ? Colors.bgGreen : Colors.bgRed)(
-        Colors.white(' ' + cppProc.code.toString() + ' '),
+      (cppProc.success ? bgGreen : bgRed)(
+        white(' ' + cppProc.code.toString() + ' '),
       )
     }`,
   );

@@ -1,4 +1,4 @@
-import { join } from 'https://deno.land/std@0.112.0/path/mod.ts';
+import { join } from '../_deps.ts';
 import { debug } from './log.ts';
 import { getCacheDir } from './cache.ts';
 

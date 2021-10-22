@@ -1,5 +1,5 @@
 import { assert } from 'https://deno.land/std@0.112.0/testing/asserts.ts';
-import { join } from 'https://deno.land/std@0.112.0/path/mod.ts';
+import { join } from '../_deps.ts';
 import { cacheAction, mkfile, run } from './_run.ts';
 
 Deno.test('Integer inputs', async () => {

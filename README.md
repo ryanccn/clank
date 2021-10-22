@@ -7,7 +7,7 @@ Built with Deno.
 ## 👾 Installation
 
 ```bash
-$ deno install -fAq --name="clank" https://deno.land/x/clank/mod.ts
+$ deno install -Af -n "clank" https://deno.land/x/clank/mod.ts
 ```
 
 ## 🔥 Usage

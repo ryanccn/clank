@@ -1,7 +1,4 @@
-import {
-  Command,
-  EnumType,
-} from 'https://deno.land/x/cliffy@v0.19.6/command/mod.ts';
+import { Command, EnumType } from './_deps.ts';
 
 import main from './commands/main.ts';
 import cacheControl from './commands/cacheControls.ts';
