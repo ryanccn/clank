@@ -8,14 +8,14 @@ import type Options from './options.ts';
 export const getCacheDir = async () => {
   const HOME = Deno.env.get('HOME');
   if (!HOME) {
-    error('couldn\'t get home directory!');
+    error('Couldn\'t get home directory!');
     Deno.exit(1);
   }
 
   const XDG_CACHE = Deno.env.get('XDG_CACHE_HOME');
   const OS = Deno.build.os;
 
-  if (XDG_CACHE) debug(`found XDG_CACHE to be ${XDG_CACHE}, using`);
+  if (XDG_CACHE) debug(`Found XDG_CACHE to be ${XDG_CACHE}, using`);
 
   const CACHE_DIR = XDG_CACHE ??
       OS === 'darwin'
@@ -27,13 +27,13 @@ export const getCacheDir = async () => {
     : 'unknown';
 
   if (CACHE_DIR === 'unknown') {
-    error('couldn\'t compute cache directory');
+    error('Couldn\'t compute cache directory');
     Deno.exit(1);
   }
   if (!await exists(CACHE_DIR)) {
     await Deno.mkdir(CACHE_DIR, { recursive: true });
   }
-  debug(`cache location: ${CACHE_DIR}`);
+  debug(`Cache location: ${CACHE_DIR}`);
 
   return CACHE_DIR;
 };

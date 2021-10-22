@@ -61,7 +61,7 @@ export default async () => {
   }).status();
 
   if (!res.success) {
-    error('update failed');
+    error('Update failed');
     Deno.exit(1);
   }
 

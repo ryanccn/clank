@@ -15,14 +15,14 @@ export default async (options: Options, fileName: string) => {
   console.log = console.error;
 
   if (!(await exists(fileName))) {
-    error('file doesn\'t exist!');
+    error('File doesn\'t exist!');
     Deno.exit(1);
   }
 
   if (options.compilerFlags) {
     const badOptions = options.compilerFlags.filter((k) => !k.startsWith('-'));
     if (badOptions.length) {
-      error(`compiler flag ${badOptions.join(', ')} is bad`);
+      error(`Compiler flag ${badOptions.join(', ')} is bad`);
       Deno.exit(1);
     }
   }
@@ -32,17 +32,39 @@ export default async (options: Options, fileName: string) => {
   if (!await exists(outputFile)) {
     await compile({ outputFile, fileName }, options);
   } else {
-    log(`already compiled, using cached version`);
+    log(`Already compiled, using cached version`);
   }
 
-  log('running...');
+  log('Running...');
 
-  const cppProc = await subp([outputFile]);
+  const { code: exitCode, success: cppSuccess } = await subp([outputFile]);
+
+  const statusText = exitCode === 127
+    ? 'Command Not Found'
+    : exitCode === 132
+    ? 'SIGKILL'
+    : exitCode === 133
+    ? 'SIGTRAP'
+    : exitCode === 134
+    ? 'SIGABRT'
+    : exitCode === 136
+    ? 'SIGFPE'
+    : exitCode === 137
+    ? 'Out of Memory'
+    : exitCode === 138
+    ? 'SIGBUS'
+    : exitCode === 139
+    ? 'Segmentation Fault'
+    : null;
 
   log(
-    `exiting with status code ${
-      (cppProc.success ? bgGreen : bgRed)(
-        white(' ' + cppProc.code.toString() + ' '),
+    `Exiting with status ${
+      (cppSuccess ? bgGreen : bgRed)(
+        white(
+          ' ' + (statusText
+            ? `${statusText} (${exitCode})`
+            : exitCode.toString()) + ' ',
+        ),
       )
     }`,
   );
@@ -52,5 +74,5 @@ export default async (options: Options, fileName: string) => {
     success(`Pruned cache, now size is ${cacheSize / 1000 / 1000} MB!`);
   }
 
-  Deno.exit(cppProc.code);
+  Deno.exit(exitCode);
 };

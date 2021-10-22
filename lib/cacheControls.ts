@@ -22,7 +22,7 @@ export const getInfo = async (dir: string) => {
     files.push({ name: x.name, path, size, removalIndex: size * staleness });
   }
 
-  debug(`cache size ${(totalSize / 1000 / 1000).toFixed(2)}MB`);
+  debug(`Cache size ${(totalSize / 1000 / 1000).toFixed(2)}MB`);
 
   return {
     size: totalSize,
@@ -45,11 +45,11 @@ export const prune = async () => {
 
     i++;
     debug(
-      `deleted ${files[i].name} from cache, removal index ${
+      `Deleted ${files[i].name} from cache, removal index ${
         files[i].removalIndex
       }`,
     );
-    debug(`cache size now ${(size / 1000 / 1000).toFixed(2)}MB`);
+    debug(`Cache size now ${(size / 1000 / 1000).toFixed(2)}MB`);
   }
 
   return size;
