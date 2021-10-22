@@ -9,7 +9,8 @@ import * as Colors from './lib/colors.ts';
 import compile from './compile.ts';
 
 import { getCacheFile } from './lib/cache.ts';
-import { clean, cleanup } from './lib/cleanup.ts';
+import { prune } from './lib/cacheControls.ts';
+import cacheControlCmd from './cacheControls.ts';
 
 import exists from './lib/exists.ts';
 import subp from './lib/subprocess.ts';
@@ -34,14 +35,8 @@ const cmd = await new Command()
     (given: string) => given.split(' ').filter((k) => !!k),
   )
   .command(
-    'clean',
-    new Command()
-      .description('clean the cache completely')
-      .action(async () => {
-        await clean();
-        log('cleaned the cache completely!');
-        Deno.exit(0);
-      }),
+    'cache',
+    cacheControlCmd,
   )
   .parse(Deno.args);
 
@@ -83,9 +78,9 @@ log(
   }`,
 );
 
-const cuR = await cleanup();
-if (cuR) {
-  log(`automatically limited cache to 0.5 GB`);
+const cacheSize = await prune();
+if (cacheSize !== -1) {
+  log(`Pruned cache, now size is ${cacheSize / 1000 / 1000} MB!`);
 }
 
 Deno.exit(cppProc.code);

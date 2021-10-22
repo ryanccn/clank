@@ -30,12 +30,12 @@ const getInfo = async (dir: string) => {
   };
 };
 
-export const cleanup = async () => {
+export const prune = async () => {
   const dir = await getCacheDir();
 
   let { size, files } = await getInfo(dir);
 
-  if (size <= LIMIT) return false;
+  if (size <= LIMIT) return -1;
 
   let i = 0;
 
@@ -52,7 +52,7 @@ export const cleanup = async () => {
     debug(`cache size now ${(size / 1000 / 1000).toFixed(2)}MB`);
   }
 
-  return true;
+  return size;
 };
 
 export const clean = async () => {
