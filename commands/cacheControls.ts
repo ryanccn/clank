@@ -2,16 +2,17 @@ import { Command } from 'https://deno.land/x/cliffy@v0.19.6/command/mod.ts';
 import { Table } from 'https://deno.land/x/cliffy@v0.19.6/table/mod.ts';
 
 import { join } from 'https://deno.land/std@0.112.0/path/mod.ts';
-import { blue, bold } from './lib/colors.ts';
+import { blue, bold } from 'https://deno.land/std@0.112.0/fmt/colors.ts';
 
-import { getCacheDir } from './lib/cache.ts';
-import { clean, prune } from './lib/cacheControls.ts';
+import { success, warning } from '../lib/log.ts';
+
+import { getCacheDir } from './../lib/cache.ts';
+import { clean, prune } from './../lib/cacheControls.ts';
 
 const cmd = new Command()
   .description('cache controls')
   .action(() => {
     cmd.showHelp();
-    Deno.exit(0);
   });
 
 cmd.command('list')
@@ -37,9 +38,7 @@ cmd.command('list')
     ]);
 
     if (totalSize) console.log(tb.toString());
-    else console.log('There\'s nothing in the cache!');
-
-    Deno.exit(0);
+    else warning('There\'s nothing in the cache!');
   });
 
 cmd.command('clean')
@@ -47,9 +46,7 @@ cmd.command('clean')
   .action(async () => {
     await clean();
 
-    console.log('Cleaned the entire cache!');
-
-    Deno.exit(0);
+    success('Cleaned the entire cache!');
   });
 
 cmd.command('prune')
@@ -58,20 +55,16 @@ cmd.command('prune')
     const size = await prune();
 
     if (size !== -1) {
-      console.log(
+      success(
         `Pruned cache, now size is ${(size / 1000 / 1000).toFixed(2)} MB!`,
       );
-    } else console.log('Cache is already under 0.5 GB!');
-
-    Deno.exit(0);
+    } else warning('Cache is already under 0.5 GB!');
   });
 
 cmd.command('path')
   .description('print the cache path')
   .action(async () => {
     console.log(await getCacheDir());
-
-    Deno.exit(0);
   });
 
 export default cmd;

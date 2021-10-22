@@ -1,6 +1,7 @@
-import { debug, error, log } from './lib/log.ts';
-import subp from './lib/subprocess.ts';
-import type Options from './lib/options.ts';
+import { debug, error, success } from './../lib/log.ts';
+
+import subp from './../lib/subprocess.ts';
+import type Options from './../lib/options.ts';
 
 export default async (
   args: { outputFile: string; fileName: string },
@@ -31,5 +32,5 @@ export default async (
     Deno.exit(compileProc.code);
   }
 
-  log(`compiled in ${(compileEnd - compileStart).toFixed(1)}ms`);
+  success(`compiled in ${(compileEnd - compileStart).toFixed(1)}ms`);
 };
