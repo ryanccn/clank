@@ -10,9 +10,9 @@ export default async (name: string, stdin?: string) => {
   await p.stdin.write(new TextEncoder().encode(stdin));
   p.stdin.close();
 
-  const stdout = new TextDecoder().decode(await p.output());
+  const stdout = new TextDecoder().decode(await p.output()).trim();
 
-  const stderr = new TextDecoder().decode(await p.stderrOutput());
+  const stderr = new TextDecoder().decode(await p.stderrOutput()).trim();
 
   const status = await p.status();
 

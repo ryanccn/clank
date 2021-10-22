@@ -1,7 +1,4 @@
-import {
-  assertEquals,
-  fail,
-} from 'https://deno.land/std@0.112.0/testing/asserts.ts';
+import { assert, fail } from 'https://deno.land/std@0.112.0/testing/asserts.ts';
 import run from './_run.ts';
 
 Deno.test('squares', async () => {
@@ -10,7 +7,7 @@ Deno.test('squares', async () => {
 
   if (!status.success) fail(`exited with status code ${status.code}`);
 
-  assertEquals<string>(stdout, (randomNum * randomNum).toString());
+  assert(stdout === (randomNum * randomNum).toString());
 });
 
 Deno.test('string', async () => {
@@ -19,5 +16,5 @@ Deno.test('string', async () => {
 
   if (!status.success) fail(`exited with status code ${status.code}`);
 
-  assertEquals<string>(stdout, str.length.toString());
+  assert(stdout === str.length.toString());
 });
