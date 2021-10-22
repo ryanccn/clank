@@ -21,6 +21,18 @@ $ clank hello.cpp
 
 # See juicy debug info:
 $ CLANK_DEBUG=1 clank hello.cpp
+
+# Inspect the cache:
+$ clank cache list
+
+# Clear the cache:
+$ clank cache clean
+
+# Prune the cache (limit it to 0.5 GB):
+$ clank cache prune
+
+# Upgrade clank:
+$ clank upgrade
 ```
 
 ## 🚀 Features
@@ -31,6 +43,7 @@ $ CLANK_DEBUG=1 clank hello.cpp
 - **Smart deletion** of cached files to keep cache size under 0.5 GB
 - Configure **which compiler** to use
 - Passing options **directly to compilers**
+- An incredibly convenient **upgrade command**
 - Looks great
 
 ## 🚧 Roadmap
