@@ -32,6 +32,7 @@ export const getCacheDir = async () => {
   if (!await exists(CACHE_DIR)) {
     await Deno.mkdir(CACHE_DIR, { recursive: true });
   }
+  debug(`cache location: ${CACHE_DIR}`);
 
   return CACHE_DIR;
 };

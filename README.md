@@ -28,12 +28,14 @@ $ CLANK_DEBUG=1 clank hello.cpp
 - **Passthrough** `stdin`, `stdout` and `stderr`
 - Prints **status code**
 - A **cache** based on unique hashes of files
-- **Automatically limiting** said cache to 0.5 GB
+- **Smart deletion** of cached files to keep cache size under 0.5 GB
+- Passing options **directly to compilers**
 - Looks great
 
 ## 🚧 Roadmap
 
 - [ ] Config file
-- [ ] Options to compiler
+- [x] Smarter deletion algo
+- [x] Options to compiler
 - [ ] Configure which compiler to use
 - [ ] More tests

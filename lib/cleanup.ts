@@ -4,48 +4,60 @@ import { getCacheDir } from './cache.ts';
 
 const LIMIT = 0.5 * 1000 * 1000 * 1000; // 0.5 GB
 
-async function convert<T>(gen: AsyncIterable<T>): Promise<T[]> {
-  const out: T[] = [];
-  for await (const x of gen) {
-    out.push(x);
-  }
-  return out;
-}
-
 const getInfo = async (dir: string) => {
-  let size = 0;
-  const files = await convert(Deno.readDir(dir));
+  let totalSize = 0;
 
-  for (const i in files) {
-    const p = join(dir, files[i].name);
-    size += (await Deno.stat(p)).size;
+  const asyncIterFiles = Deno.readDir(dir);
+  const files:
+    ({ name: string; size: number; path: string; removalIndex: number })[] = [];
+
+  for await (const x of asyncIterFiles) {
+    const path = join(dir, x.name);
+
+    const stats = await Deno.stat(path);
+    const size = stats.size;
+    const staleness = Date.now() - (stats.birthtime?.getTime() ?? Infinity);
+
+    totalSize += size;
+    files.push({ name: x.name, path, size, removalIndex: size * staleness });
   }
 
-  debug(`cache size ${(size / 1000 / 1000).toFixed(2)}MB`);
+  debug(`cache size ${(totalSize / 1000 / 1000).toFixed(2)}MB`);
 
-  return { size, files };
+  return {
+    size: totalSize,
+    files: files.sort((a, b) => a.removalIndex < b.removalIndex ? 1 : -1),
+  };
 };
 
-export default async () => {
+export const cleanup = async () => {
   const dir = await getCacheDir();
+
   let { size, files } = await getInfo(dir);
 
-  // 0.5GB
   if (size <= LIMIT) return false;
 
   let i = 0;
 
   while (size > LIMIT) {
-    const p = join(dir, files[i].name);
-    const s = (await Deno.stat(p)).size;
-
-    await Deno.remove(p);
-    size -= s;
+    await Deno.remove(files[i].path);
+    size -= files[i].size;
 
     i++;
-    debug(`deleted ${files[i].name} from cache`);
+    debug(
+      `deleted ${files[i].name} from cache, removal index ${
+        files[i].removalIndex
+      }`,
+    );
     debug(`cache size now ${(size / 1000 / 1000).toFixed(2)}MB`);
   }
 
   return true;
+};
+
+export const clean = async () => {
+  const dir = await getCacheDir();
+
+  await Deno.remove(dir, { recursive: true });
+  await Deno.mkdir(dir, { recursive: true });
 };
