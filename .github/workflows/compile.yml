@@ -27,4 +27,5 @@ jobs:
             build/clank-aarch64-apple-darwin 
             build/clank-x86_64-apple-darwin
             build/clank-x86_64-pc-windows-msvc.exe
+          draft: true
           token: ${{ secrets.GITHUB_TOKEN }}
