@@ -20,17 +20,20 @@ const cmd = new Command()
   .option<{ compilerFlags: string[] }>(
     '-f, --compiler-flags <flags>',
     'flags to pass to the compiler',
-    (given: string) => given.split(' ').filter((k) => !!k),
+    { collect: true },
+  )
+  .example('Compile and run', 'clank sth.cpp')
+  .example('Compile using g++ on macOS and run', 'clank sth.cpp -c g++')
+  .example(
+    'Compile with -O2 and all warnings and run',
+    'clank sth.cpp -f -O2 -f -Wall',
   )
   .action(main);
 
-cmd.command(
-  'cache',
-  cacheControl,
-);
+cmd.command('cache', cacheControl);
 
-cmd.command(
-  'upgrade',
-).description('upgrade clank to the latest version').action(upgrade);
+cmd.command('upgrade')
+  .description('upgrade clank to the latest version')
+  .action(upgrade);
 
 await cmd.parse(Deno.args);

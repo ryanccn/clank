@@ -21,7 +21,7 @@ export default async (
     ...(options.compilerFlags ?? []),
     args.fileName,
   ];
-  debug(`Compile command being run: ${cmd.join(' ')}`);
+  debug(`Compile command being run: ${cmd.map((k) => `"${k}"`).join(' ')}`);
 
   const compileStart = performance.now();
   const compileProc = await subp(cmd);
