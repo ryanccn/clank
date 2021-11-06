@@ -40,7 +40,7 @@ Deno.test('Prune', async () => {
 
   await cacheAction('prune');
 
-  const { size } = await (await import('./../lib/cacheControls.ts')).dfsInfo(
+  const { size } = await (await import('./../lib/cacheControls.ts')).getInfo(
     cacheDir,
   );
 

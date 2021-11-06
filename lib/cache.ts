@@ -38,18 +38,6 @@ export const getCacheDir = async () => {
   return CACHE_DIR;
 };
 
-const splitTwo = (orig: string) => {
-  if (orig.length % 2 !== 0) throw new Error('splitTwo string not even length');
-
-  let ret: string[] = [];
-
-  for (let i = 0; i < orig.length; i += 2) {
-    ret = [...ret, orig[i] + orig[i + 1]];
-  }
-
-  return ret;
-};
-
 export const getCacheFile = async (
   fileName: string,
   options: Options,
@@ -66,7 +54,6 @@ export const getCacheFile = async (
   ]);
 
   const hash = new Sha256().update(hashData).hex();
-  const frags = splitTwo(hash);
 
   debug(
     `computed hash ${hash} for file ${fileName} w/ compiler ${options.compiler} & flags ${
@@ -74,17 +61,5 @@ export const getCacheFile = async (
     }`,
   );
 
-  const smallCacheDir = join(
-    await getCacheDir(),
-    ...frags.slice(0, -1),
-  );
-
-  if (!await exists(smallCacheDir)) {
-    await Deno.mkdir(smallCacheDir, { recursive: true });
-  }
-
-  return join(
-    smallCacheDir,
-    `${frags[frags.length - 1]}.clank.build`,
-  );
+  return join(await getCacheDir(), `${hash}.clank.build`);
 };
