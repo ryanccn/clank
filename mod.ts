@@ -9,6 +9,7 @@ import VERSION from './version.ts';
 const cmd = new Command()
   .name('clank')
   .version(VERSION)
+  .versionOption('-v, --version')
   .description('A simple CLI that runs your C++ code just in time')
   .arguments<string[]>('<file>')
   .type('compilers', new EnumType(['clang++', 'g++']))
