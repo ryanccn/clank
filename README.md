@@ -10,6 +10,8 @@ Built with Deno.
 $ deno install -Af -n "clank" https://deno.land/x/clank/mod.ts
 ```
 
+Alternatively, you can download a binary from the [releases page](https://github.com/ryanccn/clank/releases/). The upgrade command doesn't work in the standalone binary.
+
 ## 🔥 Usage
 
 ```bash
