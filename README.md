@@ -33,6 +33,11 @@ $ clank cache clean
 # Prune the cache (limit it to 0.5 GB):
 $ clank cache prune
 
+# Add autocompletion to your shell:
+$ source <(clank completions bash)        # bash => ~/.bashrc
+$ source (clank completions fish | psub)  # fish => ~/.config/fish/config.fish
+$ source <(clank completions zsh)         # zsh  => ~/.zshrc
+
 # Upgrade clank:
 $ clank upgrade
 ```
@@ -46,6 +51,7 @@ $ clank upgrade
 - Configure **which compiler** to use
 - Passing options **directly to compilers**
 - An incredibly convenient **upgrade command**
+- **Shell autocompletion** support
 - Looks great
 
 ## 🚧 Roadmap

@@ -1,4 +1,4 @@
-import { Command, EnumType } from './_deps.ts';
+import { Command, CompletionsCommand, EnumType } from './_deps.ts';
 
 import main from './commands/main.ts';
 import cacheControl from './commands/cacheControls.ts';
@@ -36,5 +36,10 @@ cmd.command('cache', cacheControl);
 cmd.command('upgrade')
   .description('upgrade clank to the latest version')
   .action(upgrade);
+
+cmd.command(
+  'completions',
+  new CompletionsCommand().description('generate shell completions'),
+);
 
 await cmd.parse(Deno.args);
