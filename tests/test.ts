@@ -18,16 +18,16 @@ Deno.test('String inputs', async () => {
 
 Deno.test('File I/O', async () => {
   const randomNum = Math.floor(Math.random() * 100);
-  await Deno.writeTextFile('test.in', randomNum.toString());
+  await Deno.writeTextFile('file-io.in', randomNum.toString());
 
   await run('file-io');
 
-  const outFile = (await Deno.readTextFile('test.out')).trim();
+  const outFile = (await Deno.readTextFile('file-io.out')).trim();
 
   assert(outFile === (randomNum + 3).toString());
 
-  await Deno.remove('test.in');
-  await Deno.remove('test.out');
+  await Deno.remove('file-io.in');
+  await Deno.remove('file-io.out');
 });
 
 Deno.test('Prune', async () => {
