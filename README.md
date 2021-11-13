@@ -61,3 +61,18 @@ $ clank upgrade
 - [x] Options to compiler
 - [x] Configure which compiler to use
 - [x] More tests
+
+## 🧑‍💻 Development
+
+The [Velociraptor](https://velociraptor.run) script runner is used for productivity.
+
+```bash
+# Build native binaries
+$ vr build
+
+# Install your local version of clank as `clank-dev`
+$ vr install-dev
+
+# Run tests
+$ vr test
+```
