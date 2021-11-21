@@ -7,6 +7,7 @@ export { Table } from 'https://deno.land/x/cliffy@v0.19.6/table/mod.ts';
 
 export { Sha256 } from 'https://deno.land/std@0.112.0/hash/sha256.ts';
 
+export { writeAll } from 'https://deno.land/std@0.113.0/streams/conversion.ts';
 export { join } from 'https://deno.land/std@0.112.0/path/mod.ts';
 
 export * from 'https://deno.land/std@0.112.0/fmt/colors.ts';

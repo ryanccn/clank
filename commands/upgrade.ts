@@ -1,4 +1,5 @@
 import { error, log, success, warning } from './../lib/log.ts';
+import { writeAll } from '../_deps.ts';
 import currentVersion from '../version.ts';
 
 interface SemVer {
@@ -6,6 +7,10 @@ interface SemVer {
   minor: number;
   patch: number;
 }
+
+const isStandalone = () => {
+  return !Deno.execPath().endsWith('deno');
+};
 
 const parse = (str: string): SemVer => {
   const frags = str.split('.');
@@ -24,7 +29,7 @@ const leftBehind = (current: SemVer, latest: SemVer) =>
   current.major < latest.major || current.minor < latest.minor ||
   current.patch < latest.patch;
 
-export default async () => {
+const denoUpgrade = async () => {
   let latest: string;
 
   log('Fetching version info...');
@@ -67,3 +72,44 @@ export default async () => {
 
   success(`Upgraded clank from ${currentVersion} to ${latest}!`);
 };
+
+const standaloneUpgrade = async () => {
+  const archName = Deno.build.os === 'windows'
+    ? 'x86_64-pc-windows-msvc'
+    : Deno.build.os === 'linux'
+    ? 'x86_64-unknown-linux-gnu'
+    : Deno.build.os === 'darwin'
+    ? Deno.build.arch === 'x86_64'
+      ? 'x86_64-apple-darwin'
+      : 'aarch64-apple-darwin'
+    : null;
+
+  if (!archName) {
+    error('Can\'t find a binary with a matching architecture');
+    Deno.exit(1);
+  }
+
+  const downloadUrl =
+    `https://github.com/ryanccn/clank/releases/latest/download/clank-${archName}`;
+
+  const tmpPath = await Deno.makeTempFile();
+  const tmpFile = await Deno.open(tmpPath, { create: true, write: true });
+
+  log('Downloading binary...');
+  const res = await fetch(downloadUrl);
+
+  if (!res.ok || !res.body) {
+    error('Download failed');
+    Deno.exit(1);
+  }
+
+  for await (const chunk of res.body) {
+    await writeAll(tmpFile, chunk);
+  }
+  tmpFile.close();
+
+  log('Installing...');
+  await Deno.rename(tmpPath, Deno.execPath());
+};
+
+export default isStandalone() ? standaloneUpgrade : denoUpgrade;
