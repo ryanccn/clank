@@ -72,8 +72,8 @@ const denoUpgrade = async () => {
       '--name',
       'clank',
       '--import-map',
-      `https://deno.land/x/clank@v${latest}/import_map.json`,
-      `https://deno.land/x/clank@v${latest}/mod.ts`,
+      `https://deno.land/x/clank@${latest}/import_map.json`,
+      `https://deno.land/x/clank@${latest}/mod.ts`,
     ],
   }).status();
 
