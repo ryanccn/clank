@@ -15,9 +15,10 @@ jobs:
       - uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
+      - uses: jurassiscripts/setup-velociraptor@v1
 
       - name: Compile with Deno
-        run: deno run -A _build.ts
+        run: vr build
 
       - name: Release
         uses: softprops/action-gh-release@v1
