@@ -21,6 +21,8 @@ await Promise.all(ARCHES.map(async (arch) => {
       'deno',
       'compile',
       '-A',
+      '--import-map',
+      './import_map.json',
       '--target',
       arch,
       '--output',
@@ -29,8 +31,8 @@ await Promise.all(ARCHES.map(async (arch) => {
     ],
 
     stdin: 'null',
-    stdout: 'null',
-    stderr: 'null',
+    stdout: 'inherit',
+    stderr: 'inherit',
   }).status();
 
   const tB = performance.now();

@@ -1,3 +1,5 @@
+imap: ./import_map.json
+
 scripts:
   build:
     cmd: _build.ts

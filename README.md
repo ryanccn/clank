@@ -7,7 +7,7 @@ Built with Deno.
 ## 👾 Installation
 
 ```bash
-$ deno install -Af -n "clank" https://deno.land/x/clank/mod.ts
+$ deno install -Af -n "clank" --import-map "https://deno.land/x/clank/import_map.json" https://deno.land/x/clank/mod.ts
 ```
 
 Alternatively, you can download a binary from the [releases page](https://github.com/ryanccn/clank/releases/). The upgrade command doesn't work in the standalone binary.

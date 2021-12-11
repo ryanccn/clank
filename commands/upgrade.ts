@@ -42,9 +42,19 @@ const denoUpgrade = async () => {
     Deno.exit(1);
   }
 
+  const versions = { current: parse(currentVersion), latest: parse(latest) };
+
+  if (versions.latest.major > versions.current.major) {
+    warning('New major version found!');
+    warning('You will need to reinstall to upgrade.');
+    warning('Go to https://github.com/ryanccn/clank to download / install.');
+
+    Deno.exit(0);
+  }
+
   const needsUpgrade = leftBehind(
-    parse(currentVersion),
-    parse(latest),
+    versions.current,
+    versions.latest,
   );
 
   if (!needsUpgrade) {
@@ -61,7 +71,9 @@ const denoUpgrade = async () => {
       '--force',
       '--name',
       'clank',
-      `https://deno.land/x/clank@${latest}/mod.ts`,
+      '--import-map',
+      `https://deno.land/x/clank@v${latest}/import_map.json`,
+      `https://deno.land/x/clank@v${latest}/mod.ts`,
     ],
   }).status();
 
