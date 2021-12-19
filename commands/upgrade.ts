@@ -1,4 +1,5 @@
-import { error, log, success, warning } from './../lib/log.ts';
+import { error, log, success, warning } from '../lib/log.ts';
+import ClankError from '../lib/clankError.ts';
 import { writeAll } from '../_deps.ts';
 import currentVersion from '../version.ts';
 
@@ -19,7 +20,7 @@ const parse = (str: string): SemVer => {
   const patch = parseInt(frags[2]);
 
   if (isNaN(major) || isNaN(minor) || isNaN(patch)) {
-    throw new Error(`Failed to parse semver string ${str}`);
+    throw new ClankError(`Failed to parse semver string ${str}`);
   }
 
   return { major, minor, patch };
@@ -121,6 +122,7 @@ const standaloneUpgrade = async () => {
   tmpFile.close();
 
   log('Installing...');
+  await Deno.run({ cmd: ['chmod', '+x', tmpPath] }).status();
   await Deno.rename(tmpPath, Deno.execPath());
 };
 
