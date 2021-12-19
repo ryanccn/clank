@@ -13,7 +13,7 @@ const isStandalone = () => {
 };
 
 const parse = (str: string): SemVer => {
-  const frags = (str.startsWith('v') ? str.substr(1) : str).split('.');
+  const frags = (str.startsWith('v') ? str.substring(1) : str).split('.');
   const major = parseInt(frags[0]);
   const minor = parseInt(frags[1]);
   const patch = parseInt(frags[2]);

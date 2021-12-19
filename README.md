@@ -10,7 +10,7 @@ Built with Deno.
 $ deno install -Af -n "clank" --import-map "https://deno.land/x/clank/import_map.json" https://deno.land/x/clank/mod.ts
 ```
 
-Alternatively, you can download a binary from the [releases page](https://github.com/ryanccn/clank/releases/). The upgrade command doesn't work in the standalone binary.
+Alternatively, you can download a binary from the [releases page](https://github.com/ryanccn/clank/releases/). The upgrade command **does** work in the standalone binary.
 
 ## 🔥 Usage
 
@@ -45,7 +45,7 @@ $ clank upgrade
 ## 🚀 Features
 
 - **Passthrough** `stdin`, `stdout` and `stderr`
-- Prints **status code**
+- Prints **status code** and corresponding signal
 - A **cache** based on unique hashes of files
 - **Smart deletion** of cached files to keep cache size under 0.5 GB
 - Configure **which compiler** to use
