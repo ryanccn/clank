@@ -1,4 +1,7 @@
-import { assert } from 'https://deno.land/std@0.112.0/testing/asserts.ts';
+import {
+  assert,
+  assertEquals,
+} from 'https://deno.land/std@0.112.0/testing/asserts.ts';
 import { join } from '../_deps.ts';
 import { cacheAction, mkfile, run } from './_run.ts';
 
@@ -6,14 +9,14 @@ Deno.test('Integer inputs', async () => {
   const randomNum = Math.floor(Math.random() * 100);
   const { stdout } = await run('square', randomNum.toString());
 
-  assert(stdout === (randomNum * randomNum).toString());
+  assertEquals(stdout, (randomNum * randomNum).toString());
 });
 
 Deno.test('String inputs', async () => {
   const str = 'i4gy8bsi4ej5ty7kbsi8e4jbuw83sebhr7yusbht8usebhr';
   const { stdout } = await run('string', str);
 
-  assert(stdout === str.length.toString());
+  assertEquals(stdout, str.length.toString());
 });
 
 Deno.test('File I/O', async () => {
@@ -24,7 +27,7 @@ Deno.test('File I/O', async () => {
 
   const outFile = (await Deno.readTextFile('file-io.out')).trim();
 
-  assert(outFile === (randomNum + 3).toString());
+  assertEquals(outFile, (randomNum + 3).toString());
 
   await Deno.remove('file-io.in');
   await Deno.remove('file-io.out');

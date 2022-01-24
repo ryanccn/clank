@@ -1,7 +1,7 @@
 import type { ScriptsConfiguration } from 'https://deno.land/x/velociraptor@1.3.0/mod.ts';
 
 export default <ScriptsConfiguration> {
-  imap: './import_map.json',
+  // importMap: './import_map.json',
 
   scripts: {
     build: {
@@ -15,7 +15,7 @@ export default <ScriptsConfiguration> {
     },
     test: {
       cmd: 'deno test',
-      allow: 'all',
+      allow: ['all'],
       desc: 'Run tests',
     },
   },

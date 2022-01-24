@@ -2,12 +2,12 @@ export {
   Command,
   CompletionsCommand,
   EnumType,
-} from '@deps/cliffy/command/mod.ts';
-export { Table } from '@deps/cliffy/table/mod.ts';
+} from 'https://deno.land/x/cliffy@v0.20.1/command/mod.ts';
+export { Table } from 'https://deno.land/x/cliffy@v0.20.1/table/mod.ts';
 
-export { Sha256 } from '@deps/std/hash/sha256.ts';
+export { Sha256 } from 'https://deno.land/std@0.118.0/hash/sha256.ts';
 
-export { writeAll } from '@deps/std/streams/conversion.ts';
-export { join } from '@deps/std/path/mod.ts';
+export { writeAll } from 'https://deno.land/std@0.118.0/streams/conversion.ts';
+export { join } from 'https://deno.land/std@0.118.0/path/mod.ts';
 
-export * from '@deps/std/fmt/colors.ts';
+export * from 'https://deno.land/std@0.118.0/fmt/colors.ts';

@@ -22,7 +22,11 @@ export const run = async (name: string, stdin?: string) => {
 
   p.close();
 
-  if (!status.success) fail(`${name} exited with status code ${status.code}`);
+  if (!status.success) {
+    console.error('STDERR OUTPUT:');
+    console.error(stderr);
+    fail(`${name} exited with status code ${status.code}`);
+  }
 
   return { status, stdout, stderr };
 };
