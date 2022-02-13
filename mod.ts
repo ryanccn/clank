@@ -21,7 +21,7 @@ const cmd = new Command()
   .option<{ compilerFlags: string[] }>(
     '-f, --compiler-flags <flags>',
     'flags to pass to the compiler',
-    { collect: true, default: ['-O2', '-Wall'] },
+    { collect: true, default: ['-O2', '-Wall', '--std=c++14'] },
   )
   .example('Compile and run', 'clank sth.cpp')
   .example('Compile using g++ on macOS and run', 'clank sth.cpp -c g++')
